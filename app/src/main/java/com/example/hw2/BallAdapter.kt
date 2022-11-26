@@ -1,11 +1,15 @@
 package com.example.hw2
 
+import android.content.Context
+import android.content.Intent
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
+import androidx.core.content.ContextCompat.startActivity
 import androidx.recyclerview.widget.RecyclerView
 import com.example.hw2.databinding.ItemLayoutBinding
 
@@ -36,8 +40,11 @@ class BallAdapter(val ballList: List<Ball>): RecyclerView.Adapter<BallAdapter.Vi
         val viewHolder = ViewHolder(binding)
         // handle the item selection event
         viewHolder.itemView.setOnClickListener {
-            // if bindingAdapterPosition is not working, use adapterPosition instead
-            Toast.makeText(parent.context, ballList[viewHolder.adapterPosition].name, Toast.LENGTH_SHORT).show()
+
+            Log.d("main",ballList[viewHolder.adapterPosition].name+"be click")
+            val intent = Intent( viewHolder.itemView.context,MainActivity2::class.java)
+            intent.putExtra("sport_name",ballList[viewHolder.adapterPosition].name)
+            viewHolder.itemView.context.startActivity(intent)
         }
         return viewHolder
     }
