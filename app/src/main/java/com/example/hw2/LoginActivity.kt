@@ -3,6 +3,7 @@ package com.example.hw2
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.os.PersistableBundle
 import android.widget.Button
 import android.widget.EditText
 import android.widget.Toast
@@ -35,7 +36,11 @@ class LoginActivity : AppCompatActivity() {
             }
 
             if(isSuccess){
-                Toast.makeText(this, viewModel.getLoginData()?.name+" 登入成功!", Toast.LENGTH_SHORT).show();
+                val loginAccount =viewModel.getLoginData()
+                if (loginAccount != null) {
+                    GlobalVariable.setAccount(loginAccount)
+                }
+                Toast.makeText(this, loginAccount?.name+" 登入成功!", Toast.LENGTH_SHORT).show();
                 val intent = Intent(this,MainActivity::class.java)
                 startActivity(intent)
             }
@@ -44,5 +49,13 @@ class LoginActivity : AppCompatActivity() {
             }
 
         }
+    }
+
+    override fun onStart() {
+        var account:EditText = findViewById(R.id.editText)
+        var password:EditText = findViewById(R.id.editText2)
+        account.text=null
+        password.text=null
+        super.onStart()
     }
 }
